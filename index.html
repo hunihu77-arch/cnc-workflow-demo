@@ -1,0 +1,200 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>가공 오더 관리</title><style>
+*{box-sizing:border-box}body{margin:0;background:#eef2f6;color:#152638;font:16px 'Malgun Gothic',system-ui}header{background:#122639;color:white;padding:28px max(5vw,20px)}h1{margin:0 0 8px}nav,main{max-width:1100px;margin:20px auto;padding:0 16px}nav{display:flex;gap:8px;flex-wrap:wrap}button,input,select{font:inherit;padding:10px;border:1px solid #b4c3d1;border-radius:7px;background:white}button{cursor:pointer}button.active,button.primary{background:#006b65;color:white;border-color:#006b65}section,details{background:white;border-radius:12px;padding:20px;margin-bottom:12px}section details{padding:8px 0}form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;align-items:end}label{display:grid;gap:5px}input,select{width:100%;min-width:0}small,p{color:#52667a}summary{cursor:pointer}article{border-top:1px solid #dce4ec;padding:16px 0}strong{color:#006b65}output{color:#a42c16}h2{margin-top:0}img{display:block;max-width:min(100%,640px);max-height:420px;object-fit:contain}.thumb{width:100px;float:right;margin:0 0 8px 12px}article{display:flow-root}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}.gallery button{text-align:left}.gallery small{display:block}.gallery img{width:100%;margin-bottom:6px}[hidden]{display:none!important}body{height:100dvh;display:flex;flex-direction:column;overflow:hidden}header{padding:13px 24px}header h1{font-size:22px;margin:0}header div{display:none}nav{margin:8px auto;width:100%;max-width:1500px}main{flex:1;min-height:0;width:100%;max-width:1500px;margin:0 auto 12px;display:flex;gap:12px}.board{flex:1;min-width:0;display:grid;grid-template-columns:minmax(230px,34%) minmax(0,1fr);gap:12px}.board section,.masterList,.masterWork{margin:0;min-height:0;min-width:0;padding:14px}.queue,.work,.masterList{display:flex;flex-direction:column}.masterList{flex:0 0 32%}.masterWork{flex:1;overflow:auto}.scroll{min-height:0;overflow:auto;flex:1}.bar{display:flex;align-items:center;justify-content:space-between;gap:8px}.bar h2{margin:0;font-size:18px}.filters{margin:8px 0}.row{display:grid;text-align:left;gap:3px;width:100%;margin:0 0 5px}.row span{font-size:13px}.chosen{background:#def4f0;border-color:#006b65}.work article{border:0;padding:0}.masterList .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));align-content:start}.work details{max-height:32vh;overflow:auto}.work h2,.masterList h2,.masterWork h2{font-size:19px}@media(max-width:650px){nav button{padding:6px;font-size:12px}.board{grid-template-columns:1fr;grid-template-rows:minmax(105px,34%) minmax(0,1fr);gap:6px}main{flex-direction:column;padding:0 8px}.masterList{flex:0 0 30%}.masterWork{flex:1}.board section{padding:8px}.filters button{padding:4px 7px}.bar button{padding:5px}.row{padding:5px}}.badge{display:inline-block;border-radius:5px;padding:3px 7px;font-size:12px;font-weight:700;background:#eef2f6;color:#40536b}.ready,.hold,.soon{background:#fff0cc;color:#784600}.working,.accepted,.current{background:#dceaff;color:#174b96}.done{background:#d4f1e5;color:#086044}.late{background:#fbe0e0;color:#9b2020}.today{background:#ffe6d4;color:#8d3b12}.route,.rowBadges{display:flex;gap:5px;flex-wrap:wrap}.detailHead{display:flex;justify-content:space-between;align-items:center;gap:8px}.detailHead h2{font-size:25px;margin:3px 0 8px}.meta{margin:8px 0}.work .instruction{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;padding:12px;background:#f1f6fa;margin:8px 0}.instruction h3{margin:0 0 8px}.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.facts small,.facts b{display:block}.note{margin:8px 0;background:#fff;padding:7px;border-radius:5px}.instruction figure{margin:0;align-self:center}.instruction img{width:min(23vw,225px);max-height:150px}.instruction figcaption{font-size:12px;color:#52667a}.actions{margin:9px 0}.doclink{display:inline-block;color:#07537e;font-weight:700}@media(max-width:650px){.detailHead h2{font-size:19px}.work .instruction{gap:6px}.facts{gap:4px}.instruction img{width:24vw}}
+:root{--ink:#172942;--muted:#526680;--line:#dbe4ee;--brand:#075b60}
+body{background:#eaf0f6;color:var(--ink);font-family:Inter,'Malgun Gothic',system-ui,sans-serif}
+header{display:flex;align-items:center;gap:12px;background:#142840;padding:13px max(20px,3vw)}
+header h1{font-size:19px;letter-spacing:-.025em}.mark{display:grid;place-items:center;width:33px;height:33px;background:#a7e6da;color:#163a47;border-radius:8px;font-weight:800}
+nav{background:#fff;border-bottom:1px solid var(--line);max-width:none;margin:0 0 14px;padding:0 max(14px,3vw);gap:14px}
+nav button,nav button.active{background:transparent;border:0;border-bottom:3px solid transparent;border-radius:0;color:var(--muted);padding:13px 10px 10px;font-weight:700}
+nav button.active{color:var(--brand);border-bottom-color:var(--brand)}
+main{max-width:1680px;padding:0 max(14px,3vw);gap:16px}.board{grid-template-columns:minmax(260px,32%) minmax(0,1fr);gap:16px}
+.board .queue,.board .work,.masterList,.masterWork{border:1px solid var(--line);box-shadow:0 2px 8px #1938500a;padding:18px}
+.bar{padding-bottom:11px;border-bottom:1px solid var(--line)}.bar h2 small{font-size:12px;margin-left:5px;color:var(--muted)}
+button,input,select{border-color:#cbd8e5}button:hover{border-color:#63839e}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #168580;outline-offset:2px}
+button.primary,button.active{background:var(--brand);border-color:var(--brand)}.filters{display:flex;flex-wrap:wrap;gap:5px}.filters button{padding:5px 8px;font-size:12px}
+.row{padding:11px 12px;border-color:var(--line);border-left:3px solid transparent;margin-bottom:7px}.row.chosen{background:#eaf7f4;border-left-color:var(--brand)}.row b{font-size:15px}.rowBadges{margin-top:4px}
+.detailHead{border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:12px}.detailHead h2{margin-bottom:0}.route{align-items:center}.route .badge+.badge{margin-left:7px;position:relative}.route .badge+.badge::before{content:'›';position:absolute;left:-9px;color:#698099}
+.work .instruction{background:#f4f7fb;border:1px solid var(--line);padding:14px;margin:13px 0}.facts>div{background:#fff;border:1px solid #e2e9f2;border-radius:6px;padding:7px 9px}.facts b{overflow-wrap:anywhere}.note{border-left:3px solid #77aaa8}.instruction img{border-radius:8px}.actions{padding:10px 0}.actions button+button{margin-left:6px}.work details{border-top:1px solid var(--line);border-radius:0}
+@media(max-width:650px){header{padding:8px 12px}nav{gap:2px;margin-bottom:6px;padding:0 6px}nav button,nav button.active{padding:7px 5px}.board{grid-template-columns:1fr;gap:6px}main{padding:0 6px}.board .queue,.board .work,.masterList,.masterWork{padding:8px}.row{padding:6px}.work .instruction{padding:7px}.detailHead{flex-wrap:wrap}}
+.monitor{flex:1;min-height:0;min-width:0;display:flex;flex-direction:column;background:#142840;color:white;margin:0}.monitor .metrics{display:flex;gap:12px;margin:14px 0}.metrics b{background:#223a55;padding:10px 16px;border-radius:8px}.monitor table{width:100%;border-collapse:collapse;text-align:left;font-size:clamp(15px,2vw,27px)}.monitor th{position:sticky;top:0;background:#223a55}.monitor th,.monitor td{padding:13px 10px;border-bottom:1px solid #516478}.monitor td small{display:block;color:#bfd1e5}.monitor .badge{font-size:clamp(12px,1.4vw,21px)}.terminal .actions{position:sticky;bottom:0;background:white;border-top:1px solid var(--line);z-index:1}.terminal .actions button,.terminal .actions input{min-height:48px}.terminal .actions .primary{min-width:125px;font-weight:800}.terminal .facts b{font-size:18px}.terminal .instruction img{width:min(28vw,280px);max-height:190px}@media(orientation:portrait) and (max-width:1024px){.terminal{grid-template-columns:1fr;grid-template-rows:minmax(110px,27%) minmax(0,1fr);gap:8px}.terminal .facts b{font-size:15px}}.monitor{overflow:hidden;gap:0}.monitorGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0}.monitorGroup{min-width:0}.monitorGroup h3{margin:0 0 5px}.monitorGroup h3 small{color:#bfdaee}.monitor table{table-layout:fixed;font-size:clamp(11px,1.2vw,18px)}.monitor th,.monitor td{padding:5px 4px;height:30px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.monitor th:first-child{width:30%}.monitor th:nth-child(2){width:11%}.monitor th:nth-child(3){width:34%}.monitor .badge{font-size:clamp(9px,1vw,15px);padding:2px 4px}.monitorPager{display:flex;justify-content:center;align-items:center;gap:10px}.monitorPager button:disabled{opacity:.5;cursor:default}.monitor .metrics{margin:8px 0}.monitor .metrics b{padding:5px 9px}@media(max-width:650px){.monitorGrid{gap:5px}.monitor{padding:8px}.monitor .bar h2{font-size:17px}.monitor .metrics{gap:4px;font-size:11px}}.erp{width:100%;min-height:0;display:flex;flex-direction:column;gap:8px}.erp .bar{flex-wrap:wrap}.erp button{padding:5px 8px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.kpis>div,.grid{background:#fff;border:1px solid var(--line);border-radius:5px}.kpis small,.kpis b{display:block;padding:5px 10px}.kpis b{border-top:1px solid var(--line);font-size:22px}.grid{padding:0;margin:0;min-height:0;flex:1;display:flex;flex-direction:column}.grid table{width:100%;border-collapse:collapse;white-space:nowrap;text-align:left;font-size:13px}.grid th,.grid td{height:37px;padding:4px 8px;border-bottom:1px solid var(--line)}.grid th{position:sticky;top:0;background:#f0f3f6}.grid td button{border:0;color:#075b60;font-weight:700}.grid footer{padding:5px 10px;border-top:1px solid var(--line)}.overlay{position:fixed;inset:0;z-index:5;background:#10203080;display:grid;place-items:center;padding:12px}.overlay>section{width:min(760px,100%);max-height:94dvh;overflow:auto;margin:0}.overlay img{max-height:145px}.overlay .gallery{display:none}.overlay section section{padding:0}</style><header><span class="mark" aria-hidden="true">C</span><h1>가공 오더 관리</h1></header><nav id="nav"></nav><main id="main"></main><script>
+const tabs=['생산오더 관리','현장 작업','품질 검사','품목·공정 기준정보'];
+const demoItems=[{"id":2,"item":"플랜지 F80","customer":"한빛정밀","qty":60,"material":"S45C / Ø85","drawing":"FL-080 Rev.A","route":"CNC, 사상, 최종검사","machine":"CNC-01","due":"2026-11-21","plan":"2026-11-18","step":0,"state":"draft","log":[],"docs":{"photo":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22290%22%20height%3D%22190%22%20viewBox%3D%220%200%20290%20190%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x2%3D%220.3%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23f6f9fa%22%2F%3E%3Cstop%20offset%3D%22.52%22%20stop-color%3D%22%23b7c8d2%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23748c9b%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22290%22%20height%3D%22190%22%20rx%3D%2212%22%20fill%3D%22%23e1eaf0%22%2F%3E%3Cellipse%20cx%3D%22147%22%20cy%3D%22159%22%20rx%3D%22103%22%20ry%3D%2214%22%20fill%3D%22%23bacbd6%22%2F%3E%3Cg%20fill%3D%22%23667e8e%22%20stroke%3D%22%2351697a%22%20stroke-width%3D%221.4%22%3E%3Cellipse%20cx%3D%22145%22%20cy%3D%22116%22%20rx%3D%2291%22%20ry%3D%2249%22%2F%3E%3Cellipse%20cx%3D%22145%22%20cy%3D%22103%22%20rx%3D%2291%22%20ry%3D%2249%22%20fill%3D%22url(%23m)%22%2F%3E%3Cellipse%20cx%3D%22145%22%20cy%3D%22103%22%20rx%3D%2231%22%20ry%3D%2219%22%20fill%3D%22%23263849%22%2F%3E%3Cellipse%20cx%3D%2279%22%20cy%3D%22103%22%20rx%3D%229%22%20ry%3D%226%22%20fill%3D%22%23263849%22%2F%3E%3Cellipse%20cx%3D%22212%22%20cy%3D%22103%22%20rx%3D%229%22%20ry%3D%226%22%20fill%3D%22%23263849%22%2F%3E%3Cellipse%20cx%3D%22145%22%20cy%3D%2267%22%20rx%3D%229%22%20ry%3D%226%22%20fill%3D%22%23263849%22%2F%3E%3Cellipse%20cx%3D%22145%22%20cy%3D%22138%22%20rx%3D%229%22%20ry%3D%226%22%20fill%3D%22%23263849%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E","notes":{"CNC":"소재 규격 확인 후 작업 시작","MCT":"기준면 및 지그 안착 확인","사상":"모서리와 홀 입구 버 제거","최종검사":"적용 도면 기준 주요 치수 및 외관 확인"}}},{"id":3,"item":"스텝 샤프트 S45","customer":"대성기공","qty":120,"material":"SCM440 / Ø45","drawing":"SH-045 Rev.C","route":"CNC, 최종검사","machine":"CNC-03","due":"2026-11-22","plan":"2026-11-19","step":0,"state":"draft","log":[],"docs":{"photo":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22290%22%20height%3D%22190%22%20viewBox%3D%220%200%20290%20190%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x2%3D%220.3%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23f6f9fa%22%2F%3E%3Cstop%20offset%3D%22.52%22%20stop-color%3D%22%23b7c8d2%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23748c9b%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22290%22%20height%3D%22190%22%20rx%3D%2212%22%20fill%3D%22%23e1eaf0%22%2F%3E%3Cellipse%20cx%3D%22147%22%20cy%3D%22159%22%20rx%3D%22103%22%20ry%3D%2214%22%20fill%3D%22%23bacbd6%22%2F%3E%3Cg%20fill%3D%22%23667e8e%22%20stroke%3D%22%2351697a%22%20stroke-width%3D%221.4%22%3E%3Cpath%20d%3D%22M55%20104l48-34%2018%205%2030-22%2022%207%2042-30%2028%2040-43%2029-2%2017-31%2023-22-4-54%2034z%22%20fill%3D%22url(%23m)%22%2F%3E%3Cellipse%20cx%3D%2274%22%20cy%3D%22136%22%20rx%3D%2218%22%20ry%3D%2238%22%20transform%3D%22rotate(-35%2074%20136)%22%20fill%3D%22%238295a3%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E","notes":{"CNC":"소재 규격 확인 후 작업 시작","MCT":"기준면 및 지그 안착 확인","사상":"모서리와 홀 입구 버 제거","최종검사":"적용 도면 기준 주요 치수 및 외관 확인"}}},{"id":4,"item":"베어링 하우징 H60","customer":"동진산업","qty":32,"material":"AL6061 / 65T","drawing":"BH-060 Rev.B","route":"MCT, 사상, 최종검사","machine":"MCT-01","due":"2026-11-23","plan":"2026-11-20","step":0,"state":"draft","log":[],"docs":{"photo":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22290%22%20height%3D%22190%22%20viewBox%3D%220%200%20290%20190%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x2%3D%220.3%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23f6f9fa%22%2F%3E%3Cstop%20offset%3D%22.52%22%20stop-color%3D%22%23b7c8d2%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23748c9b%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22290%22%20height%3D%22190%22%20rx%3D%2212%22%20fill%3D%22%23e1eaf0%22%2F%3E%3Cellipse%20cx%3D%22147%22%20cy%3D%22159%22%20rx%3D%22103%22%20ry%3D%2214%22%20fill%3D%22%23bacbd6%22%2F%3E%3Cg%20fill%3D%22%23667e8e%22%20stroke%3D%22%2351697a%22%20stroke-width%3D%221.4%22%3E%3Cpath%20d%3D%22M60%20120V74l42-36h113l29%2032v59l-40%2032H94z%22%20fill%3D%22url(%23m)%22%2F%3E%3Cpath%20d%3D%22M60%2074h140l44-4m-44%204v87%22%20fill%3D%22none%22%20stroke%3D%22%23536b7e%22%2F%3E%3Cellipse%20cx%3D%22130%22%20cy%3D%22112%22%20rx%3D%2236%22%20ry%3D%2230%22%20fill%3D%22%23293c4b%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E","notes":{"CNC":"소재 규격 확인 후 작업 시작","MCT":"기준면 및 지그 안착 확인","사상":"모서리와 홀 입구 버 제거","최종검사":"적용 도면 기준 주요 치수 및 외관 확인"}}},{"id":5,"item":"클램프 블록 C40","customer":"세원테크","qty":80,"material":"SS400 / 40T","drawing":"CB-040 Rev.A","route":"MCT, 사상, 최종검사","machine":"MCT-01","due":"2026-11-24","plan":"2026-11-21","step":0,"state":"draft","log":[],"docs":{"photo":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22290%22%20height%3D%22190%22%20viewBox%3D%220%200%20290%20190%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x2%3D%220.3%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23f6f9fa%22%2F%3E%3Cstop%20offset%3D%22.52%22%20stop-color%3D%22%23b7c8d2%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23748c9b%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22290%22%20height%3D%22190%22%20rx%3D%2212%22%20fill%3D%22%23e1eaf0%22%2F%3E%3Cellipse%20cx%3D%22147%22%20cy%3D%22159%22%20rx%3D%22103%22%20ry%3D%2214%22%20fill%3D%22%23bacbd6%22%2F%3E%3Cg%20fill%3D%22%23667e8e%22%20stroke%3D%22%2351697a%22%20stroke-width%3D%221.4%22%3E%3Cpath%20d%3D%22M47%2091l75-47h116v63l-74%2054H47z%22%20fill%3D%22url(%23m)%22%2F%3E%3Cpath%20d%3D%22M47%2091h117l74-47m-74%2047v70%22%20fill%3D%22none%22%20stroke%3D%22%23536b7e%22%2F%3E%3Cellipse%20cx%3D%22111%22%20cy%3D%2273%22%20rx%3D%2213%22%20ry%3D%228%22%20fill%3D%22%23263849%22%2F%3E%3Cellipse%20cx%3D%22169%22%20cy%3D%2261%22%20rx%3D%2213%22%20ry%3D%228%22%20fill%3D%22%23263849%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E","notes":{"CNC":"소재 규격 확인 후 작업 시작","MCT":"기준면 및 지그 안착 확인","사상":"모서리와 홀 입구 버 제거","최종검사":"적용 도면 기준 주요 치수 및 외관 확인"}}},{"id":6,"item":"스페이서 링 R35","customer":"유진기계","qty":200,"material":"SUS304 / Ø38","drawing":"SR-035 Rev.D","route":"CNC, 사상, 최종검사","machine":"CNC-03","due":"2026-11-25","plan":"2026-11-22","step":0,"state":"draft","log":[],"docs":{"photo":"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22290%22%20height%3D%22190%22%20viewBox%3D%220%200%20290%20190%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22m%22%20x2%3D%220.3%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23f6f9fa%22%2F%3E%3Cstop%20offset%3D%22.52%22%20stop-color%3D%22%23b7c8d2%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23748c9b%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22290%22%20height%3D%22190%22%20rx%3D%2212%22%20fill%3D%22%23e1eaf0%22%2F%3E%3Cellipse%20cx%3D%22147%22%20cy%3D%22159%22%20rx%3D%22103%22%20ry%3D%2214%22%20fill%3D%22%23bacbd6%22%2F%3E%3Cg%20fill%3D%22%23667e8e%22%20stroke%3D%22%2351697a%22%20stroke-width%3D%221.4%22%3E%3Cellipse%20cx%3D%22145%22%20cy%3D%22119%22%20rx%3D%2278%22%20ry%3D%2251%22%2F%3E%3Cellipse%20cx%3D%22145%22%20cy%3D%2298%22%20rx%3D%2278%22%20ry%3D%2251%22%20fill%3D%22url(%23m)%22%2F%3E%3Cellipse%20cx%3D%22145%22%20cy%3D%2298%22%20rx%3D%2250%22%20ry%3D%2230%22%20fill%3D%22%23293c4b%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E","notes":{"CNC":"소재 규격 확인 후 작업 시작","MCT":"기준면 및 지그 안착 확인","사상":"모서리와 홀 입구 버 제거","최종검사":"적용 도면 기준 주요 치수 및 외관 확인"}}}];
+let templates=JSON.parse(localStorage.getItem('cnc-master-v2')||'null')||{'브라켓 A':{material:'AL6061 / 20T',drawing:'BR-A Rev.B',route:'CNC, 사상, 최종검사',machine:'CNC-03'}};
+for(const {item,material,drawing,route,machine,docs} of demoItems)if(!Object.hasOwn(templates,item))templates[item]={material,drawing,route,machine,docs};
+const equipment={CNC:['CNC-01','CNC-03'],MCT:['MCT-01'],사상:['FIN-01']};
+const workers=['W01','W02','Q01'];
+const seed={id:1,customer:'샘플정밀',item:'브라켓 A',qty:100,due:'2026-11-20',plan:'2026-11-18',...templates['브라켓 A'],docs:{notes:{CNC:'소재 방향과 지그 안착 상태 확인',사상:'홀 입구 버 제거 및 모서리 확인',최종검사:'도면 기준 주요 치수와 외관 확인'}},step:0,state:'draft',log:[]};
+let monitor=false, monitorPage=0;let page=0, opened=false;let selected=null, adding=false, notice='';let filter='all';let orders=JSON.parse(localStorage.getItem('cnc-demo-v3')||'null')||[seed,...demoItems],tab=0;
+const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const stages=o=>o.route.split(',').map(s=>s.trim()).filter(Boolean);
+const stage=o=>stages(o)[o.step];
+const status=o=>({draft:'지시 전',ready:'접수 대기',accepted:'접수 완료',working:'진행 중',hold:'소재 대기',done:'검사 완료'})[o.state];
+function save(){localStorage.setItem('cnc-demo-v1',JSON.stringify(orders));render()}
+function record(o,msg){o.log.push(new Date().toLocaleString('ko-KR')+' · '+msg)}
+function change(o,action,data={}){
+ if(action==='issue'&&o.state==='draft'){o.state='ready';record(o,'전량 작업지시 발행');return}
+ if(action==='accept'&&o.state==='ready'){
+   if(!workers.includes(data.worker))throw Error('작업자 코드를 확인하세요.');
+   const allowed=equipment[stage(o)];
+   if(allowed&&(!allowed.includes(data.machine)||(o.step===0&&o.machine&&data.machine!==o.machine)))throw Error('공정 또는 작업지시에 지정된 설비를 확인하세요.');
+   Object.assign(o,{worker:data.worker,actual:data.machine||'',state:'accepted'});record(o,stage(o)+' 접수 · '+o.worker+' '+o.actual);return;
+ }
+ if(action==='start'&&['accepted','hold'].includes(o.state)){o.state='working';record(o,stage(o)+' 시작');return}
+ if(action==='hold'&&['accepted','working'].includes(o.state)){o.state='hold';record(o,'소재 대기');return}
+ if(action==='finish'&&o.state==='working'){
+   const qty=Number(data.qty);
+   if(stage(o)==='최종검사'){
+     if(!Number.isInteger(qty)||qty<0||qty>o.qty)throw Error('합격 수량을 확인하세요.');
+     o.pass=qty;o.state='done';record(o,'검사 완료 · 합격 '+qty+' / 불합격 '+(o.qty-qty));return;
+   }
+   if(qty!==o.qty)throw Error('지시 수량 '+o.qty+'개를 모두 완료해야 인계됩니다.');
+   record(o,stage(o)+' '+qty+'개 완료 · 다음 공정 '+stages(o)[o.step+1]);o.step++;o.state='ready';o.worker='';o.actual='';return;
+ }
+ throw Error('현재 상태에서 처리할 수 없습니다.');
+}
+function deadline(o,today=new Date()){
+ if(o.state==='done')return ['closed','검사 완료'];
+ const now=Date.UTC(today.getFullYear(),today.getMonth(),today.getDate());
+ const days=(Date.parse(o.due)-now)/86400000;
+ if(days<0)return ['late','납기 '+(-days)+'일 초과'];
+ if(days===0)return ['today','오늘 납기'];
+ if(days<=3)return ['soon','납기 D−'+days];
+ return ['normal','납기 '+o.due];
+}
+function badge(kind,label){return '<span class="badge '+kind+'">'+e(label)+'</span>'}
+function stateBadge(o){return badge(o.state,(o.state==='draft'||o.state==='done'?'':stage(o)+' ')+status(o))}
+function documents(o){
+ const d=o.docs||{}, photo=d.photos?.[stage(o)]||d.photo;
+ return '<section class="instruction"><div><h3>작업 기준</h3><div class="facts"><div><small>지시 수량</small><b>'+o.qty+'개</b></div><div><small>소재 규격</small><b>'+e(o.material)+'</b></div><div><small>도면 번호·개정</small><b>'+e(o.drawing)+'</b></div><div><small>작업 설비</small><b>'+e(o.actual||(o.step===0&&o.machine)||'현장에서 선택')+'</b></div></div><div class="note"><small>'+(tab===2?'검사 기준':'공정 메모')+'</small><br>'+e(d.notes?.[stage(o)]||'등록된 메모 없음')+'</div>'+(d.pdf?'<a class="doclink" download="drawing.pdf" href="'+e(d.pdf)+'">도면 PDF 다운로드</a>':'<small>첨부 도면 없음</small>')+'</div>'+(photo?'<figure><a href="'+e(photo)+'" download="work-reference"><img alt="작업 참고 이미지" src="'+e(photo)+'"></a><figcaption>'+(d.photos?.[stage(o)]?'공정 작업 사진':'품목 이미지')+'</figcaption></figure>':'')+'</section>';
+}
+function card(o){
+ const quality=stage(o)==='최종검사';
+ let form='';
+ if(tab===0&&o.state==='draft')form='<button class="primary" data-action="issue">전량 지시 발행</button>';
+ if(tab===1||tab===2){
+   if(o.state==='ready')form='<form data-action="accept"><label>작업자 QR 코드<input name="worker" required placeholder="'+(quality?'Q01':'W01 또는 W02')+'"></label>'+(!quality?'<label>설비·작업대 QR 코드<input name="machine" required placeholder="'+e((equipment[stage(o)]||[]).join(' / '))+'"></label>':'')+'<button type="button" data-action="sample">샘플 코드 채우기</button><button class="primary">접수</button></form>';
+   if(['accepted','hold'].includes(o.state))form='<button class="primary" data-action="start">'+(quality?'검사':'작업')+' 시작</button>';
+   if(!quality&&['accepted','working'].includes(o.state))form+='<button data-action="hold">소재 대기</button>';
+   if(o.state==='working')form+='<form data-action="finish"><label>'+(quality?'합격 수량':'완료 수량')+'<input name="qty" type="number" min="0" max="'+o.qty+'" value="'+o.qty+'" required></label><button class="primary">'+(quality?'검사 완료':'전량 완료 및 인계')+'</button></form>';
+ }
+ return '<article data-id="'+o.id+'"><div class="detailHead"><div><small>'+e(o.customer)+'</small><h2>'+e(o.item)+'</h2></div><div>'+stateBadge(o)+' '+badge(...deadline(o))+'</div></div><div class="route">'+stages(o).map((s,i)=>badge(o.state==='done'||i<o.step?'done':o.state!=='draft'&&i===o.step?'current':'normal',(o.state==='done'||i<o.step?'✓ ':i+1+'. ')+s)).join('')+'</div><p class="meta">납기 '+e(o.due)+' · 생산 예정 '+e(o.plan)+(o.worker?' · 담당 '+e(o.worker):'')+(o.state==='done'?' · 합격 '+o.pass+' / 불합격 '+(o.qty-o.pass):'')+'</p>'+documents(o)+'<div class="actions">'+form+'<output></output></div><details><summary>처리 이력 <small>'+o.log.length+'건</small></summary>'+ (o.log.map(l=>'<p>'+e(l)+'</p>').join('')||'<p>처리 이력 없음</p>')+'</details></article>';
+}
+function master(){
+ return '<section><h2>품목·공정 기준정보</h2><form id="master"><label>등록 품목<select id="pick"><option value="">신규 등록</option>'+Object.keys(templates).map(x=>'<option>'+e(x)+'</option>').join('')+'</select></label><label>품목명<input name="item" required></label><label>소재 규격<input name="material" required></label><label>도면 번호·개정<input name="drawing" required></label><label>공정 순서<input name="route" required placeholder="CNC, 사상, 최종검사"></label><label>첫 공정 지정 설비<input name="machine"></label><label>도면 PDF<input name="pdf" type="file" accept="application/pdf"></label><label>품목 사진<input name="photo" type="file" accept="image/png,image/jpeg,image/webp"></label><label>공정 선택<select name="stage">'+['CNC','MCT','사상','최종검사'].map(x=>'<option>'+x+'</option>').join('')+'</select></label><label>공정 메모·검사 기준<input name="note"></label><label>공정 사진<input name="stagePhoto" type="file" accept="image/png,image/jpeg,image/webp"></label><button class="primary">기준정보 저장</button><output></output></form><p>공정 메모와 사진은 선택한 공정에 저장됩니다. 첨부는 파일당 1MB 이하입니다.</p><div class="gallery">'+Object.entries(templates).map(([item,t])=>'<button type="button" data-item="'+e(item)+'">'+(t.docs?.photo?'<img alt="" src="'+e(t.docs.photo)+'">':'')+'<b>'+e(item)+'</b><small>'+e(t.material)+'</small></button>').join('')+'</div></section>';
+}
+function fillMaster(f){
+ const t=templates[f.elements.item.value];
+ f.elements.note.value=t?.docs?.notes?.[f.elements.stage.value]||'';
+}
+const fileData=(file,types)=>new Promise((resolve,reject)=>{
+ if(!file?.size)return resolve('');
+ if(file.size>1048576||!types.includes(file.type))return reject(Error('파일 형식과 1MB 크기 제한을 확인하세요.'));
+ const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(file);
+});
+function render(){
+ nav.innerHTML=tabs.map((x,i)=>'<button data-tab="'+i+'" class="'+(i===tab?'active':'')+'">'+x+'</button>').join('');
+ const visible=orders.filter(o=>tab===0?(filter==='all'||(filter==='active'?!['draft','done'].includes(o.state):filter==='urgent'?['late','today','soon'].includes(deadline(o)[0]):o.state===filter)):(o.state!=='draft'&&o.state!=='done'&&(tab===2)===(stage(o)==='최종검사')));
+ if(tab===0&&monitor){
+ const active=orders.filter(o=>o.state!=='done').sort((a,b)=>a.due.localeCompare(b.due));
+ const finished=orders.filter(o=>o.state==='done').reverse();
+ const urgent=active.filter(o=>['late','today','soon'].includes(deadline(o)[0])).length;
+ const size=Math.max(1,Math.min(12,Math.floor((window.innerHeight-295)/44)));
+ const pages=Math.max(1,Math.ceil(active.length/size),Math.ceil(finished.length/size));
+ monitorPage=Math.min(monitorPage,pages-1);
+ const table=(rows,done)=>'<div class="monitorGroup"><h3>'+(done?'검사 완료':'미완료')+' <small>'+rows.length+'건</small></h3><table><thead><tr><th>품목</th><th>수량</th><th>'+(done?'검사 결과':'공정 상태')+'</th><th>납기</th></tr></thead><tbody>'+rows.slice(monitorPage*size,(monitorPage+1)*size).map(o=>'<tr><td title="'+e(o.item)+'">'+e(o.item)+'</td><td>'+o.qty+'</td><td>'+(done?badge('done','합격 '+o.pass+' / 불합격 '+(o.qty-o.pass)):stateBadge(o))+'</td><td>'+(done?e(o.due):badge(...deadline(o)))+'</td></tr>').join('')+'</tbody></table>'+(rows.length?'':'<p>표시할 건이 없습니다.</p>')+'</div>';
+ main.innerHTML='<section class="monitor"><div class="bar"><h2>생산 진행 모니터</h2><button data-monitor>관리 화면으로</button></div><div class="metrics"><b>미완료 '+active.length+'건</b><b>납기 주의 '+urgent+'건</b><b>검사 완료 '+finished.length+'건</b></div><div class="monitorGrid">'+table(active,false)+table(finished,true)+'</div><div class="monitorPager"><button data-page="-1" '+(monitorPage===0?'disabled':'')+'>이전</button><span>'+(monitorPage+1)+' / '+pages+'</span><button data-page="1" '+(monitorPage+1===pages?'disabled':'')+'>다음</button></div></section>';return;
+ }
+ const current=visible.find(o=>o.id===selected)||visible[0];
+ if(current)selected=current.id;
+ const entry='<div class="entry"><h2>수주 등록</h2><form id="newOrder" novalidate><label>고객사<input name="customer" required></label><label>등록 품목 선택<select id="orderItem" name="registeredItem"><option value="">신규품 직접 입력</option>'+Object.keys(templates).map(x=>'<option value="'+e(x)+'">'+e(x)+'</option>').join('')+'</select></label><label id="newItemName">품목명<input name="item" required></label><label>수주 수량<input name="qty" type="number" min="1" required></label><label>납기<input name="due" type="date" required></label><label>생산 예정일<input name="plan" type="date" required></label><label>소재 규격<input name="material" required></label><label>도면 번호·개정<input name="drawing" required></label><label>공정 순서<input name="route" placeholder="CNC, MCT, 사상, 최종검사" required></label><label>첫 공정 지정 설비<input name="machine" placeholder="공란이면 현장 선택"></label><button class="primary">수주 등록</button><output></output></form></div>';
+ const controls=tab===0?Object.entries({all:'전체',draft:'미발행',active:'진행 중',urgent:'납기 주의',done:'완료'}).map(([k,v])=>'<button data-filter="'+k+'" class="'+(filter===k?'active':'')+'">'+v+' '+orders.filter(o=>k==='all'||(k==='active'?!['draft','done'].includes(o.state):k==='urgent'?['late','today','soon'].includes(deadline(o)[0]):o.state===k)).length+'</button>').join(' '):'';
+ {
+ const rows=tab===3?Object.entries(templates):visible;
+ const n=Math.max(1,Math.floor((window.innerHeight-310)/38)), pages=Math.max(1,Math.ceil(rows.length/n));page=Math.min(page,pages-1);
+ const panel=tab===3?(opened?master():''):adding?entry:opened&&current?card(current):'';
+ main.innerHTML='<div class="erp"><div class="bar"><h2>'+(tab===0?'생산오더 현황':tabs[tab])+'</h2><div>'+(tab===0?controls+' <button data-monitor>모니터링</button> <button class="primary" data-new>수주 등록</button>':tab===3?'<button class="primary" data-master-item="">품목 등록</button>':'')+'</div></div>'+(notice?'<small role="status">'+e(notice)+'</small>':'')+'<section class="grid"><div class="scroll"><table><thead><tr>'+[['수주번호','품목','고객사','예정일','납기','계획량','발행','작업 상태','양품'],['품목','공정','지시 수량','설비','작업자','상태','납기'],['품목','검사 수량','검사자','상태','납기'],['품목','소재','도면·개정','공정 순서','지정 설비']][tab].map(k=>'<th>'+k+'</th>').join('')+'</tr></thead><tbody>'+rows.slice(page*n,(page+1)*n).map(o=>{
+ const link=(label)=>'<button data-order="'+o.id+'">'+e(label)+'</button>';
+ const due=tab!==3?e(o.due)+' '+(['late','today','soon'].includes(deadline(o)[0])?badge(...deadline(o)):''):'';
+ const c=tab===0?[link('SO-'+o.id),e(o.item),e(o.customer),e(o.plan),due,o.qty,o.state==='draft'?'미발행':'발행',stateBadge(o),o.pass??'—']:tab===1?[link(o.item),e(stage(o)),o.qty,e(o.actual||(o.step===0&&o.machine)||'—'),e(o.worker||'—'),stateBadge(o),due]:tab===2?[link(o.item),o.qty,e(o.worker||'—'),stateBadge(o),due]:['<button data-master-item="'+e(o[0])+'">'+e(o[0])+'</button>',e(o[1].material),e(o[1].drawing),e(o[1].route),e(o[1].machine||'현장 선택')];
+ return '<tr>'+c.map(x=>'<td>'+x+'</td>').join('')+'</tr>';
+ }).join('')+'</tbody></table></div><footer>총 '+rows.length+'건 <button data-step="-1" '+(!page?'disabled':'')+'>이전</button> '+(page+1)+' / '+pages+' <button data-step="1" '+(page+1===pages?'disabled':'')+'>다음</button></footer></section></div>'+(panel?'<div class="overlay"><section role="dialog" aria-modal="true" aria-label="수주 정보"><button data-close>닫기</button>'+panel+'</section></div>':'');return;
+ }
+
+}
+nav.onclick=ev=>{if(ev.target.dataset.tab!==undefined){tab=Number(ev.target.dataset.tab);page=0;monitor=false;opened=false;adding=false;notice='';render()}};
+main.onclick=ev=>{
+ const b=ev.target;
+ const masterButton=b.closest('[data-master-item]');if(masterButton){opened=true;render();const pick=main.querySelector('#pick');pick.value=masterButton.dataset.masterItem;pick.dispatchEvent(new Event('change',{bubbles:true}));return}
+ if(b.closest('[data-close]')){adding=opened=false;render();return}
+ if(b.dataset.step){page+=Number(b.dataset.step);render();return}
+ if(b.closest('[data-monitor]')){monitor=!monitor;monitorPage=0;render();return}
+ if(b.closest('[data-new]')){adding=true;notice='';render();return}
+ const monitorButton=b.closest('[data-page]');if(monitorButton){monitorPage+=Number(monitorButton.dataset.page);render();return}
+ const row=b.closest('[data-order]');if(row){selected=Number(row.dataset.order);opened=true;adding=false;notice='';render();return}
+ const item=b.closest('[data-item]')?.dataset.item;
+ if(item){const pick=main.querySelector('#pick');pick.value=item;pick.dispatchEvent(new Event('change',{bubbles:true}));pick.focus();return}
+ if(b.closest('[data-filter]')){filter=b.closest('[data-filter]').dataset.filter;page=0;render();return}
+
+ const a=b.dataset.action;if(!a)return;
+ const el=b.closest('article'),o=orders.find(o=>o.id===Number(el.dataset.id));
+ if(a==='sample'){b.form.elements.worker.value=tab===2?'Q01':'W01';if(tab===1)b.form.elements.machine.value=(o.step===0&&o.machine)||equipment[stage(o)][0];return}
+ try{change(o,a);save()}catch(err){el.querySelector('output').textContent=err.message}
+};
+main.onchange=ev=>{
+ const f=ev.target.form;
+ if(ev.target.id==='orderItem'){
+   const item=ev.target.value;
+   const t=Object.hasOwn(templates,item)?templates[item]:null;
+   f.elements.item.value=item;
+   f.elements.item.readOnly=!!t;
+   f.querySelector('#newItemName').hidden=!!t;
+   for(const k of ['material','drawing','route','machine'])f.elements[k].value=t?.[k]||'';
+   if(!t)f.elements.item.focus();
+ }
+ if(ev.target.id==='pick'){
+   const t=templates[ev.target.value];f.elements.item.value=ev.target.value;
+   for(const k of ['material','drawing','route','machine'])f.elements[k].value=t?.[k]||'';
+   for(const k of ['pdf','photo','stagePhoto'])f.elements[k].value='';
+   fillMaster(f);
+ }
+ if(f?.id==='master'&&ev.target.name==='stage'){f.elements.stagePhoto.value='';fillMaster(f)}
+};
+main.onsubmit=async ev=>{
+ ev.preventDefault();const f=ev.target,d=Object.fromEntries(new FormData(f));
+ if(f.id==='master'){
+   const out=f.querySelector('output');
+   try{
+     const prior=templates[d.item]?.docs||{};
+     const images=['image/png','image/jpeg','image/webp'];
+     const [pdf,photo,stagePhoto]=await Promise.all([fileData(d.pdf,['application/pdf']),fileData(d.photo,images),fileData(d.stagePhoto,images)]);
+     const docs={pdf:pdf||prior.pdf,photo:photo||prior.photo,notes:{...prior.notes,[d.stage]:d.note},photos:{...prior.photos}};
+     if(stagePhoto)docs.photos[d.stage]=stagePhoto;
+     const updated={...templates,[d.item]:{material:d.material,drawing:d.drawing,route:d.route,machine:d.machine,docs}};
+     localStorage.setItem('cnc-master-v2',JSON.stringify(updated));templates=updated;
+     render();main.querySelector('#pick').value=d.item;main.querySelector('#pick').dispatchEvent(new Event('change',{bubbles:true}));main.querySelector('output').textContent='저장 완료';
+   }catch(err){out.textContent=err.message||'첨부를 저장할 수 없습니다.'}
+   return;
+ }
+ if(f.id==='newOrder'){
+   const out=f.querySelector('output');
+   d.item=(d.registeredItem||d.item||'').trim();
+   delete d.registeredItem;
+   const required={customer:'고객사',item:'품목명',qty:'수주 수량',due:'납기',plan:'생산 예정일',material:'소재 규격',drawing:'도면 번호·개정',route:'공정 순서'};
+   const missing=Object.entries(required).filter(([key])=>!d[key]?.trim()).map(([,label])=>label);
+   if(missing.length){out.textContent='입력해 주세요 · '+missing.join(', ');return}
+   if(!Number.isSafeInteger(Number(d.qty))||Number(d.qty)<1){out.textContent='수주 수량은 1 이상의 정수로 입력해 주세요.';return}
+   const s=stages(d);
+   if(s.length<2||s.at(-1)!=='최종검사'||s.slice(0,-1).some(x=>!Object.hasOwn(equipment,x))||(d.machine&&!equipment[s[0]]?.includes(d.machine))){f.querySelector('output').textContent='공정과 설비 코드를 확인하세요. 마지막 공정은 최종검사입니다.';return}
+   const order={...d,docs:Object.hasOwn(templates,d.item)?templates[d.item].docs:undefined,qty:Number(d.qty),id:Date.now(),step:0,state:'draft',log:[]};
+   const updated=[order,...orders];
+   try{localStorage.setItem('cnc-demo-v3',JSON.stringify(updated))}
+   catch(err){out.textContent='브라우저 저장 공간에 수주를 저장하지 못했습니다.';return}
+   orders=updated;filter='all';page=0;opened=false;selected=order.id;adding=false;notice=order.item+' '+order.qty+'개 수주 등록 완료';render();
+   return
+ }
+ const el=f.closest('article'),o=orders.find(o=>o.id===Number(el.dataset.id));
+ try{change(o,f.dataset.action,d);if(f.dataset.action==='finish'&&stage(o)==='최종검사'&&o.state==='ready')tab=2;opened=false;save()}catch(err){el.querySelector('output').textContent=err.message}
+};
+window.addEventListener('resize',()=>{if(monitor||(tab===0&&!adding&&!opened))render()});
+render();
+</script></html>
