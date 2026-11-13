@@ -29,7 +29,7 @@ const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt
 const stages=o=>o.route.split(',').map(s=>s.trim()).filter(Boolean);
 const stage=o=>stages(o)[o.step];
 const status=o=>({draft:'지시 전',ready:'접수 대기',accepted:'접수 완료',working:'진행 중',hold:'소재 대기',done:'검사 완료'})[o.state];
-function save(){localStorage.setItem('cnc-demo-v1',JSON.stringify(orders));render()}
+function save(){localStorage.setItem('cnc-demo-v3',JSON.stringify(orders));render()}
 function record(o,msg){o.log.push(new Date().toLocaleString('ko-KR')+' · '+msg)}
 function change(o,action,data={}){
  if(action==='issue'&&o.state==='draft'){o.state='ready';record(o,'전량 작업지시 발행');return}
